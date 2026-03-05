@@ -3,6 +3,7 @@ import { useAdminPanel } from "./useAdminPanel";
 function AdminServices() {
   const {
     loading,
+    isActionLoading,
     services,
     serviceForm,
     setServiceForm,
@@ -22,6 +23,12 @@ function AdminServices() {
           placeholder="Name"
           value={serviceForm.name}
           onChange={(event) => setServiceForm((prev) => ({ ...prev, name: event.target.value }))}
+          required
+        />
+        <input
+          placeholder="Category (e.g. Wash Services)"
+          value={serviceForm.category}
+          onChange={(event) => setServiceForm((prev) => ({ ...prev, category: event.target.value }))}
           required
         />
         <input
@@ -62,11 +69,16 @@ function AdminServices() {
           You can upload one or multiple images. Auto compression is enabled on server. Max upload size: 20MB per file.
         </p>
         <div className="flex gap-2 md:col-span-2">
-          <button className="btn-brand" type="submit">
-            {serviceForm.id ? "Update Service" : "Create Service"}
+          <button className="btn-brand disabled:cursor-not-allowed disabled:opacity-60" type="submit" disabled={isActionLoading}>
+            {isActionLoading ? "Saving..." : serviceForm.id ? "Update Service" : "Create Service"}
           </button>
           {serviceForm.id && (
-            <button type="button" className="btn-ghost" onClick={setInitialServiceForm}>
+            <button
+              type="button"
+              className="btn-ghost disabled:cursor-not-allowed disabled:opacity-60"
+              onClick={setInitialServiceForm}
+              disabled={isActionLoading}
+            >
               Cancel Edit
             </button>
           )}
@@ -94,6 +106,7 @@ function AdminServices() {
                   )}
                   <div>
                   <h3 className="font-semibold">{service.name}</h3>
+                  <p className="text-xs text-muted">{service.category || "Other Services"}</p>
                   <p className="text-sm text-muted">INR {service.price}</p>
                   {Array.isArray(service.images) && service.images.length > 1 && (
                     <p className="text-xs text-muted">{service.images.length} images</p>
@@ -113,10 +126,10 @@ function AdminServices() {
                   </div>
                 )}
                 <div className="flex gap-2">
-                  <button type="button" className="btn-ghost" onClick={() => startEditService(service)}>
+                  <button type="button" className="btn-ghost disabled:cursor-not-allowed disabled:opacity-60" onClick={() => startEditService(service)} disabled={isActionLoading}>
                     Edit
                   </button>
-                  <button type="button" className="btn-ghost" onClick={() => handleServiceDelete(service._id)}>
+                  <button type="button" className="btn-ghost disabled:cursor-not-allowed disabled:opacity-60" onClick={() => handleServiceDelete(service._id)} disabled={isActionLoading}>
                     Delete
                   </button>
                 </div>

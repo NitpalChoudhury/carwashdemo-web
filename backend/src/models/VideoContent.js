@@ -2,6 +2,14 @@ const mongoose = require("mongoose");
 
 const videoContentSchema = new mongoose.Schema(
   {
+    shortVideos: {
+      type: [String],
+      default: [],
+    },
+    landscapeVideos: {
+      type: [String],
+      default: [],
+    },
     shortVideo: {
       type: String,
       default: "",

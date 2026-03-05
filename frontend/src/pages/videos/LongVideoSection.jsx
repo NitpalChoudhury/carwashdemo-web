@@ -11,7 +11,11 @@ function LongVideoSection() {
     getLongVideo()
       .then((data) => {
         if (!isMounted) return;
-        setVideoUrl(data?.landscapeVideo || "");
+        const list = Array.isArray(data?.landscapeVideos)
+          ? data.landscapeVideos.filter(Boolean)
+          : [];
+        const latest = list[list.length - 1] || data?.landscapeVideo || "";
+        setVideoUrl(latest);
       })
       .catch(() => {
         if (!isMounted) return;

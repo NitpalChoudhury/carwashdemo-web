@@ -46,7 +46,22 @@ const updateBanner = async (req, res) => {
   }
 };
 
+const deleteBanner = async (req, res) => {
+  try {
+    const banner = await Banner.findOneAndDelete();
+
+    if (!banner) {
+      return res.status(404).json({ message: "Banner not found." });
+    }
+
+    return res.json({ message: "Banner deleted successfully." });
+  } catch (error) {
+    return res.status(500).json({ message: "Failed to delete banner." });
+  }
+};
+
 module.exports = {
   getBanner,
   updateBanner,
+  deleteBanner,
 };

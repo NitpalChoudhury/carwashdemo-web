@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { getShortVideo } from "../../api/videos";
 
 function ShortVideoSection() {
-  const [videoUrl, setVideoUrl] = useState("");
+  const [videoUrls, setVideoUrls] = useState([]);
   const [error, setError] = useState("");
   const [active, setActive] = useState(0);
   const [pause, setPause] = useState(false);
@@ -10,7 +10,12 @@ function ShortVideoSection() {
   useEffect(() => {
     getShortVideo()
       .then((data) => {
-        setVideoUrl(data?.shortVideo || "");
+        const list = Array.isArray(data?.shortVideos)
+          ? data.shortVideos.filter(Boolean)
+          : data?.shortVideo
+          ? [data.shortVideo]
+          : [];
+        setVideoUrls(list);
       })
       .catch(() => {
         setError("Unable to load short video.");
@@ -18,15 +23,13 @@ function ShortVideoSection() {
   }, []);
 
   const slides = useMemo(() => {
-    if (!videoUrl) return [];
-    return [
-      {
-        id: 1,
-        src: videoUrl,
-        title: "Service Reel",
-      },
-    ];
-  }, [videoUrl]);
+    if (!videoUrls.length) return [];
+    return videoUrls.map((url, index) => ({
+      id: index,
+      src: url,
+      title: `Service Reel ${index + 1}`,
+    }));
+  }, [videoUrls]);
 
   useEffect(() => {
     if (pause || slides.length <= 1) return;
@@ -38,10 +41,17 @@ function ShortVideoSection() {
     return () => clearInterval(interval);
   }, [slides.length, pause]);
 
+  const nextSlide = () => {
+    setActive((prev) => (prev + 1) % slides.length);
+  };
+
+  const prevSlide = () => {
+    setActive((prev) => (prev - 1 + slides.length) % slides.length);
+  };
+
   return (
     <section className="relative mt-16 px-4 sm:px-6 pt-10 sm:pt-16">
 
-      {/* Red Glow Background */}
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.18),transparent_60%)]"></div>
 
       {/* Header */}
@@ -77,6 +87,32 @@ function ShortVideoSection() {
           onMouseLeave={() => setPause(false)}
         >
 
+          {/* LEFT ARROW */}
+          {slides.length > 1 && (
+            <button
+              onClick={prevSlide}
+              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20
+              bg-red-600 hover:bg-red-700 text-white
+              w-10 h-10 rounded-full flex items-center justify-center
+              shadow-lg transition"
+            >
+              ❮
+            </button>
+          )}
+
+          {/* RIGHT ARROW */}
+          {slides.length > 1 && (
+            <button
+              onClick={nextSlide}
+              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20
+              bg-red-600 hover:bg-red-700 text-white
+              w-10 h-10 rounded-full flex items-center justify-center
+              shadow-lg transition"
+            >
+              ❯
+            </button>
+          )}
+
           {/* Slider */}
           <div
             className="flex transition-transform duration-700 ease-in-out"
@@ -88,10 +124,8 @@ function ShortVideoSection() {
 
                 <div className="relative w-[220px] sm:w-[260px] md:w-[300px]">
 
-                  {/* Red Glow Border */}
                   <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-red-500 via-red-600 to-red-700 blur opacity-40"></div>
 
-                  {/* Video Card */}
                   <div className="relative overflow-hidden rounded-3xl bg-black p-2 shadow-2xl">
 
                     <video
@@ -107,7 +141,6 @@ function ShortVideoSection() {
 
                   </div>
 
-                  {/* Caption */}
                   <p className="mt-2 sm:mt-3 text-center text-xs sm:text-sm font-semibold text-white">
                     {slide.title}
                   </p>

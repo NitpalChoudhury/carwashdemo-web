@@ -4,13 +4,14 @@ import { FiMenu, FiX } from "react-icons/fi";
 import { useAuth } from "../context/AuthContext";
 
 const navLinks = [
-  { label: "Home", path: "/" },
-  { label: "Services", path: "/services" },
-  { label: "Reviews", path: "/reviews" },
-  { label: "Pricing", path: "/pricing" },
-  { label: "Pickup", path: "/pickup" },
-  { label: "About", path: "/about" },
-  { label: "Contact", path: "/contact" },
+  { id:1, label:"Home", path:"/" },
+  { id:2, label:"Services", path:"/services" },
+  { id:3, label:"Reviews", path:"/reviews" },
+  { id:4, label:"Pricing", path:"/pricing" },
+  { id:5, label:"Pickup", path:"/pickup" },
+  { id:6, label:"About", path:"/about" },
+  { id:7, label:"Contact", path:"/contact" },
+  { id:8, label:"Price List", path:"/price-list" }
 ];
 
 function Navbar() {
@@ -51,7 +52,7 @@ function Navbar() {
           <nav className="hidden items-center gap-6 text-sm lg:flex">
             {navLinks.map((link) => (
               <NavLink
-                key={link.path}
+                key={link.id}
                 to={link.path}
                 className={({ isActive }) =>
                   isActive ? "font-semibold text-red-400" : "text-gray-300 hover:text-white"
@@ -125,7 +126,7 @@ function Navbar() {
         <div className="flex flex-col gap-2 p-5">
           {navLinks.map((link) => (
             <NavLink
-              key={link.path}
+              key={link.id}
               to={link.path}
               onClick={closeMenu}
               className={({ isActive }) =>

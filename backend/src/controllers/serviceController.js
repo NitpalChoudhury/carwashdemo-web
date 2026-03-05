@@ -53,7 +53,7 @@ const getServiceById = async (req, res) => {
 
 const createService = async (req, res) => {
   try {
-    const { name, description, price, features } = req.body;
+    const { name, category, description, price, features } = req.body;
 
     if (!name || !description || price === undefined) {
       return res
@@ -71,6 +71,7 @@ const createService = async (req, res) => {
     );
     const service = await Service.create({
       name,
+      category: category ? String(category).trim() : "Other Services",
       description,
       price: Number(price),
       image: imageUrls[0],
@@ -87,10 +88,11 @@ const createService = async (req, res) => {
 const updateService = async (req, res) => {
   try {
     const { id } = req.params;
-    const { name, description, price, features } = req.body;
+    const { name, category, description, price, features } = req.body;
     const updates = {};
 
     if (name !== undefined) updates.name = name;
+    if (category !== undefined) updates.category = String(category).trim() || "Other Services";
     if (description !== undefined) updates.description = description;
     if (price !== undefined) updates.price = Number(price);
     if (features !== undefined) updates.features = normalizeFeatures(features);

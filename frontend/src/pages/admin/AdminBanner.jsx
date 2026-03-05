@@ -3,10 +3,12 @@ import { useAdminPanel } from "./useAdminPanel";
 function AdminBanner() {
   const {
     loading,
+    isActionLoading,
     banner,
     bannerForm,
     setBannerForm,
     handleBannerSubmit,
+    handleBannerDelete,
   } = useAdminPanel();
 
   return (
@@ -48,9 +50,21 @@ function AdminBanner() {
               </p>
             </div>
             <div className="md:col-span-2">
-              <button className="btn-brand" type="submit">
-                Save Banner
-              </button>
+              <div className="flex gap-2">
+                <button className="btn-brand disabled:cursor-not-allowed disabled:opacity-60" type="submit" disabled={isActionLoading}>
+                  {isActionLoading ? "Saving..." : "Save Banner"}
+                </button>
+                {banner && (
+                  <button
+                    type="button"
+                    className="btn-ghost disabled:cursor-not-allowed disabled:opacity-60"
+                    onClick={handleBannerDelete}
+                    disabled={isActionLoading}
+                  >
+                    Delete Banner
+                  </button>
+                )}
+              </div>
             </div>
           </form>
         </>

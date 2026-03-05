@@ -1,38 +1,89 @@
 import { useAdminPanel } from "./useAdminPanel";
 
 function AdminOverview() {
-  const { loading, services, reviews, banner } = useAdminPanel();
+
+  const { loading, services, reviews, bookings, contacts, announcements, banner } = useAdminPanel();
 
   if (loading) {
-    return <p className="text-sm text-muted">Loading summary...</p>;
+    return <p className="text-sm text-gray-400">Loading summary...</p>;
   }
+
+  const stats = [
+    { label: "Services", value: services.length },
+    { label: "Reviews", value: reviews.length },
+    { label: "Bookings", value: bookings.length },
+    { label: "Contacts", value: contacts.length },
+    { label: "Announce", value: announcements.length },
+    { label: "Banner", value: banner ? "Set" : "Not set" }
+  ];
 
   return (
     <div>
-      <h2 className="text-2xl font-bold">Overview</h2>
-      <p className="mt-1 text-sm text-muted">Quick status of your current admin content.</p>
 
-      <div className="mt-5 grid gap-4 md:grid-cols-3">
-        <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-          <p className="text-xs uppercase tracking-[0.15em] text-muted">Services</p>
-          <p className="mt-2 text-3xl font-extrabold text-[#ffba49]">{services.length}</p>
-        </div>
-        <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-          <p className="text-xs uppercase tracking-[0.15em] text-muted">Reviews</p>
-          <p className="mt-2 text-3xl font-extrabold text-[#ffba49]">{reviews.length}</p>
-        </div>
-        <div className="rounded-xl border border-white/10 bg-black/20 p-4">
-          <p className="text-xs uppercase tracking-[0.15em] text-muted">Banner</p>
-          <p className="mt-2 text-lg font-bold text-[#ffba49]">{banner ? "Configured" : "Not set"}</p>
-        </div>
+      <h2 className="text-2xl font-bold text-white">Overview</h2>
+      <p className="mt-1 text-sm text-gray-400">
+        Quick status of your current admin content.
+      </p>
+
+      {/* Stats Grid */}
+      <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
+
+        {stats.map((item, index) => (
+          <div
+            key={index}
+            className="
+              rounded-xl border border-white/10
+              bg-[#0b141d]
+              p-5
+              text-center
+              transition
+              hover:scale-105
+              hover:border-red-400/40
+              hover:shadow-[0_0_12px_rgba(255,0,0,0.25)]
+            "
+          >
+
+            {/* Title */}
+            <p className="text-xs uppercase tracking-wider text-gray-400">
+              {item.label}
+            </p>
+
+            {/* Value Box */}
+            <div className="mt-3 flex justify-center">
+              <div
+                className="
+                  rounded-lg
+                  border border-red-400/40
+                  bg-black/30
+                  px-4 py-2
+                  text-2xl font-bold
+                  text-red-400
+                "
+              >
+                {item.value}
+              </div>
+            </div>
+
+          </div>
+        ))}
+
       </div>
 
+      {/* Banner Preview */}
       {banner?.image && (
-        <div className="mt-6">
-          <p className="mb-2 text-sm text-muted">Current Banner Preview</p>
-          <img src={banner.image} alt={banner.title} className="h-56 w-full rounded-xl object-cover" />
+        <div className="mt-8">
+          <p className="mb-2 text-sm text-gray-400">Current Banner Preview</p>
+
+          <div className="overflow-hidden rounded-xl border border-white/10">
+            <img
+              src={banner.image}
+              alt={banner.title}
+              className="h-48 w-full object-cover md:h-56"
+            />
+          </div>
         </div>
       )}
+
     </div>
   );
 }

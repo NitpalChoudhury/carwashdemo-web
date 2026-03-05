@@ -3,6 +3,7 @@ import { useAdminPanel } from "./useAdminPanel";
 function AdminReviews() {
   const {
     loading,
+    isActionLoading,
     reviews,
     reviewForm,
     setReviewForm,
@@ -41,11 +42,16 @@ function AdminReviews() {
           required
         />
         <div className="flex gap-2 md:col-span-2">
-          <button className="btn-brand" type="submit">
-            {reviewForm.id ? "Update Review" : "Create Review"}
+          <button className="btn-brand disabled:cursor-not-allowed disabled:opacity-60" type="submit" disabled={isActionLoading}>
+            {isActionLoading ? "Saving..." : reviewForm.id ? "Update Review" : "Create Review"}
           </button>
           {reviewForm.id && (
-            <button type="button" className="btn-ghost" onClick={setInitialReviewForm}>
+            <button
+              type="button"
+              className="btn-ghost disabled:cursor-not-allowed disabled:opacity-60"
+              onClick={setInitialReviewForm}
+              disabled={isActionLoading}
+            >
               Cancel Edit
             </button>
           )}
@@ -77,10 +83,10 @@ function AdminReviews() {
                   </div>
                 </div>
                 <div className="flex gap-2">
-                  <button type="button" className="btn-ghost" onClick={() => startEditReview(review)}>
+                  <button type="button" className="btn-ghost disabled:cursor-not-allowed disabled:opacity-60" onClick={() => startEditReview(review)} disabled={isActionLoading}>
                     Edit
                   </button>
-                  <button type="button" className="btn-ghost" onClick={() => handleReviewDelete(review._id)}>
+                  <button type="button" className="btn-ghost disabled:cursor-not-allowed disabled:opacity-60" onClick={() => handleReviewDelete(review._id)} disabled={isActionLoading}>
                     Delete
                   </button>
                 </div>

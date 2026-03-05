@@ -11,6 +11,9 @@ const serviceRoutes = require("./routes/serviceRoutes");
 const bannerRoutes = require("./routes/bannerRoutes");
 const userRoutes = require("./routes/userRoutes");
 const videoRoutes = require("./routes/videoRoutes");
+const announcementRoutes = require("./routes/announcementRoutes");
+const contactRoutes = require("./routes/contactRoutes");
+const adminBookingRoutes = require("./routes/adminBookingRoutes");
 
 const app = express();
 const allowedOrigins = (process.env.CORS_ORIGIN || "*")
@@ -54,6 +57,9 @@ app.use("/services", serviceRoutes);
 app.use("/banner", bannerRoutes);
 app.use("/user", userRoutes);
 app.use("/videos", videoRoutes);
+app.use("/announcements", announcementRoutes);
+app.use("/contacts", contactRoutes);
+app.use("/admin/bookings", adminBookingRoutes);
 
 app.use((err, req, res, next) => {
   const maxUploadSizeMb = Number(process.env.MAX_UPLOAD_SIZE_MB || 20);

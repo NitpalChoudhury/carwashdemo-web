@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { apiRequest } from "../api/client";
 
 function About() {
+
   const [stats, setStats] = useState({ services: 0, reviews: 0 });
 
   useEffect(() => {
@@ -11,11 +12,14 @@ function About() {
       apiRequest("/services").catch(() => []),
       apiRequest("/reviews").catch(() => []),
     ]).then(([services, reviews]) => {
+
       if (!active) return;
+
       setStats({
         services: Array.isArray(services) ? services.length : 0,
         reviews: Array.isArray(reviews) ? reviews.length : 0,
       });
+
     });
 
     return () => (active = false);
@@ -24,114 +28,171 @@ function About() {
   return (
     <div className="page-shell py-12">
 
-      {/* ------------------------------------------------------- */}
-      {/* LUXURY HERO BANNER  */}
-      {/* ------------------------------------------------------- */}
+      {/* ================= HERO SECTION ================= */}
 
-      <section className="relative mb-14 h-[48vh] w-full overflow-hidden rounded-2xl shadow-2xl">
+      <section className="relative h-[55vh] overflow-hidden rounded-3xl shadow-2xl">
 
-        {/* Background banner image */}
         <img
-          src="/banner-about.jpeg"  // <-- Put your image in public/banner-about.jpg
+          src="/banner-about.jpeg"
           alt="About CoziCars"
-          className="absolute inset-0 h-full w-full object-cover"
+          className="absolute inset-0 h-full w-full object-cover scale-105"
         />
 
-        {/* Dark Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/70 to-black/40 backdrop-blur-[2px]" />
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/30" />
 
-        {/* Content Layer */}
         <div className="relative z-10 flex h-full flex-col justify-center px-8 md:px-16">
-          <h1 className="text-4xl font-extrabold text-white md:text-5xl lg:text-6xl leading-tight drop-shadow-lg">
-            Redefining Premium <span className="text-red-500">Car & Bike Care</span>
+
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white leading-tight">
+            Premium Vehicle Care <br />
+            <span className="text-red-500">For Shillong</span>
           </h1>
 
-          <p className="mt-4 max-w-2xl text-sm text-gray-200 md:text-lg leading-relaxed">
-            We blend technology, transparency and trust to deliver a modern vehicle servicing
-            experience — built specially for Shillong.
+          <p className="mt-5 max-w-xl text-gray-200 text-sm md:text-lg leading-relaxed">
+            A modern car & bike care platform designed for convenience,
+            transparency and premium detailing services.
           </p>
+
         </div>
+
       </section>
 
-      {/* ------------------------------------------------------- */}
-      {/* INTRO SECTION */}
-      {/* ------------------------------------------------------- */}
+      {/* ================= INTRO ================= */}
 
-      <section className="rounded-2xl bg-white/5 p-10 shadow-xl backdrop-blur-lg">
-        <h2 className="text-3xl font-bold text-white">
-          About <span className="text-red-400">Shillong CoziCars</span>
-        </h2>
+      <section className="mt-16 grid items-center gap-10 md:grid-cols-2">
 
-        <p className="mt-4 max-w-3xl text-base leading-relaxed text-gray-300 md:text-lg">
-          Shillong CoziCars is committed to delivering modern, transparent and
-          professional vehicle care. From doorstep pickup to visual service 
-          reports, we prioritize clarity, speed, and top-tier workmanship that 
-          builds long-term trust with every customer.
-        </p>
+        <div>
+          <h2 className="text-3xl font-bold text-white">
+            About <span className="text-red-400">Shillong CoziCars</span>
+          </h2>
 
-        <div className="mt-5 h-1 w-24 rounded bg-red-500"></div>
-      </section>
+          <div className="mt-4 h-1 w-20 bg-red-500 rounded"></div>
 
-      {/* ------------------------------------------------------- */}
-      {/* FEATURE CARDS */}
-      {/* ------------------------------------------------------- */}
+          <p className="mt-6 text-gray-300 leading-relaxed">
+            Shillong CoziCars delivers premium vehicle care with a modern,
+            transparent approach. From doorstep pickup to visual service
+            updates, we ensure every step of your vehicle's journey is
+            documented and delivered with precision.
+          </p>
 
-      <section className="mt-12 grid gap-6 md:grid-cols-2">
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-lg hover:scale-[1.02] transition">
-          <h3 className="text-xl font-semibold text-white">What We Do</h3>
-          <p className="mt-3 text-sm text-gray-300 leading-relaxed">
-            We provide on-demand car & bike care including deep cleaning,
-            premium detailing, service packages and maintenance. Every step is
-            documented for complete transparency.
+          <p className="mt-4 text-gray-300 leading-relaxed">
+            Our mission is simple — elevate vehicle maintenance into a
+            seamless and premium experience for every driver in Shillong.
           </p>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 shadow-xl backdrop-blur-lg hover:scale-[1.02] transition">
-          <h3 className="text-xl font-semibold text-white">Why Customers Trust Us</h3>
-          <p className="mt-3 text-sm text-gray-300 leading-relaxed">
-            Our customers trust us for consistent timelines, clear pricing,
-            honest diagnostics and service quality. We help maintain their
-            vehicle’s health for the long run.
+        <img
+          src="/about-garage.jpeg"
+          alt="Car detailing"
+          className="rounded-2xl shadow-xl object-cover h-[320px] w-full"
+        />
+
+      </section>
+
+      {/* ================= FEATURES ================= */}
+
+      <section className="mt-16 grid gap-6 md:grid-cols-3">
+
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl hover:scale-[1.03] transition shadow-lg">
+
+          <h3 className="text-xl font-semibold text-white">
+            Professional Detailing
+          </h3>
+
+          <p className="mt-3 text-sm text-gray-300">
+            Advanced cleaning, polishing and protective treatments for
+            maintaining showroom quality vehicles.
           </p>
+
         </div>
+
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl hover:scale-[1.03] transition shadow-lg">
+
+          <h3 className="text-xl font-semibold text-white">
+            Transparent Service
+          </h3>
+
+          <p className="mt-3 text-sm text-gray-300">
+            We document every service with clarity so customers always know
+            what their vehicle is receiving.
+          </p>
+
+        </div>
+
+        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl hover:scale-[1.03] transition shadow-lg">
+
+          <h3 className="text-xl font-semibold text-white">
+            Pickup & Delivery
+          </h3>
+
+          <p className="mt-3 text-sm text-gray-300">
+            Doorstep pickup ensures vehicle servicing without interrupting
+            your daily schedule.
+          </p>
+
+        </div>
+
       </section>
 
-      {/* ------------------------------------------------------- */}
-      {/* STATISTIC CARDS */}
-      {/* ------------------------------------------------------- */}
+      {/* ================= STATS ================= */}
 
-      <section className="mt-12 grid gap-6 md:grid-cols-3">
-        {/* Services Count */}
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center shadow-xl backdrop-blur-md">
-          <p className="text-xs uppercase tracking-[0.2em] text-gray-400">Live Services</p>
-          <p className="mt-3 text-4xl font-extrabold text-red-400">{stats.services}</p>
+      <section className="mt-16 grid gap-6 md:grid-cols-3">
+
+        <div className="rounded-2xl border border-white/10 bg-black/30 p-8 text-center shadow-xl backdrop-blur-lg">
+
+          <p className="text-xs uppercase tracking-[0.2em] text-gray-400">
+            Live Services
+          </p>
+
+          <p className="mt-4 text-4xl font-extrabold text-red-400">
+            {stats.services}
+          </p>
+
         </div>
 
-        {/* Reviews */}
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center shadow-xl backdrop-blur-md">
-          <p className="text-xs uppercase tracking-[0.2em] text-gray-400">Customer Reviews</p>
-          <p className="mt-3 text-4xl font-extrabold text-red-400">{stats.reviews}</p>
+        <div className="rounded-2xl border border-white/10 bg-black/30 p-8 text-center shadow-xl backdrop-blur-lg">
+
+          <p className="text-xs uppercase tracking-[0.2em] text-gray-400">
+            Customer Reviews
+          </p>
+
+          <p className="mt-4 text-4xl font-extrabold text-red-400">
+            {stats.reviews}
+          </p>
+
         </div>
 
-        {/* Coverage */}
-        <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center shadow-xl backdrop-blur-md">
-          <p className="text-xs uppercase tracking-[0.2em] text-gray-400">City Coverage</p>
-          <p className="mt-3 text-4xl font-extrabold text-red-400">24 Zones</p>
+        <div className="rounded-2xl border border-white/10 bg-black/30 p-8 text-center shadow-xl backdrop-blur-lg">
+
+          <p className="text-xs uppercase tracking-[0.2em] text-gray-400">
+            City Coverage
+          </p>
+
+          <p className="mt-4 text-4xl font-extrabold text-red-400">
+            24 Zones
+          </p>
+
         </div>
+
       </section>
 
-      {/* ------------------------------------------------------- */}
-      {/* CLOSING MESSAGE */}
-      {/* ------------------------------------------------------- */}
+      {/* ================= CTA ================= */}
 
-      <section className="mt-14 rounded-2xl bg-white/5 p-8 text-center shadow-xl backdrop-blur-lg">
-        <h3 className="text-xl font-semibold text-white">
-          Built for the Shillong community with trust and reliability.
+      <section className="mt-16 rounded-3xl bg-gradient-to-r from-red-600 to-red-500 p-10 text-center shadow-2xl">
+
+        <h3 className="text-2xl font-bold text-white">
+          Experience Premium Car Care
         </h3>
-        <p className="mt-3 text-sm text-gray-300">
-          Your vehicle deserves better — and we make sure it gets exactly that.
+
+        <p className="mt-3 text-white/90">
+          Book your vehicle service with Shillong CoziCars today.
         </p>
+
+        <button className="mt-6 rounded-lg bg-white px-6 py-3 font-semibold text-black hover:bg-gray-200">
+          Book a Service
+        </button>
+
       </section>
+
     </div>
   );
 }
