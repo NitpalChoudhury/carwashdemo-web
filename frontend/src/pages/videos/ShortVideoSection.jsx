@@ -17,7 +17,6 @@ function ShortVideoSection() {
       });
   }, []);
 
-  // Only show videos that actually exist
   const slides = useMemo(() => {
     if (!videoUrl) return [];
     return [
@@ -40,21 +39,21 @@ function ShortVideoSection() {
   }, [slides.length, pause]);
 
   return (
-    <section className="relative mt-20 px-6 pt-16">
+    <section className="relative mt-16 px-4 sm:px-6 pt-10 sm:pt-16">
 
       {/* Red Glow Background */}
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.18),transparent_60%)]"></div>
 
       {/* Header */}
-      <div className="mb-10 text-center">
+      <div className="mb-8 sm:mb-10 text-center">
 
-        <h2 className="mt-6 text-4xl font-bold text-white">
+        <h2 className="text-2xl sm:text-4xl font-bold text-white">
           Quick Service Videos
         </h2>
 
-        <div className="mx-auto mt-3 h-[2px] w-28 bg-gradient-to-r from-red-500 to-red-700"></div>
+        <div className="mx-auto mt-2 sm:mt-3 h-[2px] w-20 sm:w-28 bg-gradient-to-r from-red-500 to-red-700"></div>
 
-        <p className="mt-4 text-gray-400 text-sm">
+        <p className="mt-3 text-gray-400 text-xs sm:text-sm">
           See how we transform cars in seconds
         </p>
 
@@ -73,7 +72,7 @@ function ShortVideoSection() {
       ) : (
 
         <div
-          className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-10"
+          className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 sm:p-10"
           onMouseEnter={() => setPause(true)}
           onMouseLeave={() => setPause(false)}
         >
@@ -87,7 +86,7 @@ function ShortVideoSection() {
             {slides.map((slide) => (
               <div key={slide.id} className="w-full shrink-0 flex justify-center">
 
-                <div className="relative w-[260px] md:w-[300px]">
+                <div className="relative w-[220px] sm:w-[260px] md:w-[300px]">
 
                   {/* Red Glow Border */}
                   <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-red-500 via-red-600 to-red-700 blur opacity-40"></div>
@@ -101,7 +100,7 @@ function ShortVideoSection() {
                       loop
                       playsInline
                       controls
-                      className="h-[460px] w-full rounded-2xl object-cover"
+                      className="h-[380px] sm:h-[420px] md:h-[460px] w-full rounded-2xl object-cover"
                     >
                       <source src={slide.src} type="video/mp4" />
                     </video>
@@ -109,7 +108,7 @@ function ShortVideoSection() {
                   </div>
 
                   {/* Caption */}
-                  <p className="mt-3 text-center text-sm font-semibold text-white">
+                  <p className="mt-2 sm:mt-3 text-center text-xs sm:text-sm font-semibold text-white">
                     {slide.title}
                   </p>
 
@@ -122,14 +121,14 @@ function ShortVideoSection() {
 
           {/* Indicators */}
           {slides.length > 1 && (
-            <div className="mt-8 flex justify-center gap-3">
+            <div className="mt-6 flex justify-center gap-2 sm:gap-3">
               {slides.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => setActive(i)}
                   className={`h-2 rounded-full transition-all duration-300 ${
                     active === i
-                      ? "w-10 bg-gradient-to-r from-red-500 to-red-700"
+                      ? "w-8 sm:w-10 bg-gradient-to-r from-red-500 to-red-700"
                       : "w-2 bg-white/40"
                   }`}
                 />
