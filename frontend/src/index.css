@@ -112,3 +112,12 @@ select:focus {
   border-color: rgba(255, 186, 73, 0.8);
   box-shadow: 0 0 0 3px var(--ring);
 }
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

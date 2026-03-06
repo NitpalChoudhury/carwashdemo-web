@@ -55,15 +55,15 @@ function ShortVideoSection() {
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(239,68,68,0.18),transparent_60%)]"></div>
 
       {/* Header */}
-      <div className="mb-8 sm:mb-10 text-center">
+      <div className="mb-10 text-center">
 
-        <h2 className="text-2xl sm:text-4xl font-bold text-white">
+        <h2 className="text-3xl sm:text-4xl font-bold text-white">
           Quick Service Videos
         </h2>
 
-        <div className="mx-auto mt-2 sm:mt-3 h-[2px] w-20 sm:w-28 bg-gradient-to-r from-red-500 to-red-700"></div>
+        <div className="mx-auto mt-3 h-[2px] w-28 bg-gradient-to-r from-red-500 to-red-700"></div>
 
-        <p className="mt-3 text-gray-400 text-xs sm:text-sm">
+        <p className="mt-3 text-gray-400 text-sm">
           See how we transform cars in seconds
         </p>
 
@@ -82,16 +82,16 @@ function ShortVideoSection() {
       ) : (
 
         <div
-          className="relative mx-auto max-w-4xl overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-5 sm:p-10"
+          className="relative mx-auto max-w-5xl overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8"
           onMouseEnter={() => setPause(true)}
           onMouseLeave={() => setPause(false)}
         >
 
-          {/* LEFT ARROW */}
+          {/* Left Arrow */}
           {slides.length > 1 && (
             <button
               onClick={prevSlide}
-              className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-20
               bg-red-600 hover:bg-red-700 text-white
               w-10 h-10 rounded-full flex items-center justify-center
               shadow-lg transition"
@@ -100,11 +100,11 @@ function ShortVideoSection() {
             </button>
           )}
 
-          {/* RIGHT ARROW */}
+          {/* Right Arrow */}
           {slides.length > 1 && (
             <button
               onClick={nextSlide}
-              className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-20
               bg-red-600 hover:bg-red-700 text-white
               w-10 h-10 rounded-full flex items-center justify-center
               shadow-lg transition"
@@ -120,52 +120,66 @@ function ShortVideoSection() {
           >
 
             {slides.map((slide) => (
+
               <div key={slide.id} className="w-full shrink-0 flex justify-center">
 
-                <div className="relative w-[220px] sm:w-[260px] md:w-[300px]">
+                {/* Video Card */}
+                <div className="relative w-[240px] sm:w-[260px] md:w-[300px] group">
 
-                  <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-red-500 via-red-600 to-red-700 blur opacity-40"></div>
+                  {/* Glow */}
+                  <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-red-500 via-red-600 to-red-700 blur opacity-30 group-hover:opacity-60 transition"></div>
 
-                  <div className="relative overflow-hidden rounded-3xl bg-black p-2 shadow-2xl">
+                  {/* Card */}
+                  <div className="relative overflow-hidden rounded-3xl bg-black shadow-2xl">
 
-                    <video
-                      muted
-                      autoPlay
-                      loop
-                      playsInline
-                      controls
-                      className="h-[380px] sm:h-[420px] md:h-[460px] w-full rounded-2xl object-cover"
-                    >
-                      <source src={slide.src} type="video/mp4" />
-                    </video>
+                    {/* 9:16 Video */}
+                    <div className="aspect-[9/16]">
+
+                      <video
+                        muted
+                        autoPlay
+                        loop
+                        playsInline
+                        controls
+                        className="w-full h-full object-cover"
+                      >
+                        <source src={slide.src} type="video/mp4" />
+                      </video>
+
+                    </div>
 
                   </div>
 
-                  <p className="mt-2 sm:mt-3 text-center text-xs sm:text-sm font-semibold text-white">
+                  <p className="mt-3 text-center text-sm font-semibold text-white">
                     {slide.title}
                   </p>
 
                 </div>
 
               </div>
+
             ))}
 
           </div>
 
           {/* Indicators */}
           {slides.length > 1 && (
-            <div className="mt-6 flex justify-center gap-2 sm:gap-3">
+            <div className="mt-6 flex justify-center gap-3">
+
               {slides.map((_, i) => (
+
                 <button
                   key={i}
                   onClick={() => setActive(i)}
                   className={`h-2 rounded-full transition-all duration-300 ${
                     active === i
-                      ? "w-8 sm:w-10 bg-gradient-to-r from-red-500 to-red-700"
+                      ? "w-10 bg-gradient-to-r from-red-500 to-red-700"
                       : "w-2 bg-white/40"
                   }`}
                 />
+
               ))}
+
             </div>
           )}
 

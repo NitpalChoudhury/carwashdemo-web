@@ -86,7 +86,7 @@ function ServiceDetailsPage() {
       <div className="grid gap-10 md:grid-cols-2">
 
         {/* IMAGE SECTION */}
-        <div className="glass-card p-4">
+        <div className="glass-card p-4 max-w-[480px]">
 
           {serviceImages.length ? (
 
@@ -94,11 +94,16 @@ function ServiceDetailsPage() {
 
               <div className="relative overflow-hidden rounded-2xl bg-black/30 p-3 shadow-2xl">
 
-                <img
-                  src={serviceImages[activeImageIndex]}
-                  alt={service.name}
-                  className="h-[350px] md:h-[420px] w-full rounded-xl object-cover transition duration-500 hover:scale-105"
-                />
+                {/* 2:3 IMAGE */}
+                <div className="w-full aspect-[2/3] overflow-hidden rounded-xl">
+
+                  <img
+                    src={serviceImages[activeImageIndex]}
+                    alt={service.name}
+                    className="w-full h-full object-cover transition duration-500 hover:scale-105"
+                  />
+
+                </div>
 
                 {serviceImages.length > 1 && (
                   <>
@@ -124,10 +129,13 @@ function ServiceDetailsPage() {
 
               </div>
 
+              {/* THUMBNAILS */}
               {serviceImages.length > 1 && (
+
                 <div className="mt-4 flex gap-2 overflow-x-auto">
 
                   {serviceImages.map((img, index) => (
+
                     <button
                       key={index}
                       onClick={() => setActiveImageIndex(index)}
@@ -137,15 +145,19 @@ function ServiceDetailsPage() {
                           : "border-white/20"
                       }`}
                     >
+
                       <img
                         src={img}
                         alt="thumb"
                         className="h-16 w-20 object-cover rounded-md"
                       />
+
                     </button>
+
                   ))}
 
                 </div>
+
               )}
 
             </div>

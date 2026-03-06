@@ -37,23 +37,26 @@ function Pricing() {
 
   const servicesByCategory = useMemo(() => {
     const grouped = services.reduce((acc, service) => {
-      const category = String(service?.category || "").trim() || "Other Services";
+      const category =
+        String(service?.category || "").trim() || "Other Services";
       if (!acc[category]) acc[category] = [];
       acc[category].push(service);
       return acc;
     }, {});
-    return Object.entries(grouped).sort((a, b) => a[0].localeCompare(b[0]));
+    return Object.entries(grouped).sort((a, b) =>
+      a[0].localeCompare(b[0])
+    );
   }, [services]);
 
   return (
     <div className="page-shell py-16">
 
-      {/* Header */}
-      <div className="text-center mb-14">
-        <h1 className="text-4xl font-bold text-white tracking-wide">
+      {/* HEADER */}
+      <div className="text-center mb-14 px-4">
+        <h1 className="text-3xl md:text-4xl font-bold text-white tracking-wide">
           Our Pricing
         </h1>
-        <p className="mt-3 text-gray-400 text-sm">
+        <p className="mt-3 text-gray-400 text-sm md:text-base">
           Transparent pricing powered directly by your backend services.
         </p>
       </div>
@@ -63,14 +66,16 @@ function Pricing() {
       )}
 
       {loading ? (
-        <p className="text-center text-gray-400">Loading services...</p>
+        <p className="text-center text-gray-400">
+          Loading services...
+        </p>
       ) : (
         <div className="space-y-16">
 
           {servicesByCategory.map(([category, categoryServices]) => (
             <section key={category}>
 
-              <h2 className="text-2xl font-bold text-white mb-8">
+              <h2 className="text-xl md:text-2xl font-bold text-white mb-8 px-4">
                 {category}
               </h2>
 
@@ -83,35 +88,38 @@ function Pricing() {
                     className="
                     grid
                     grid-cols-1
-                    lg:grid-cols-[380px_1fr]
-                    gap-10
+                    lg:grid-cols-[480px_1fr]
+                    gap-8 lg:gap-10
                     items-center
                     bg-white/5
                     border border-white/10
                     rounded-2xl
-                    p-8
+                    p-6 md:p-8
                     backdrop-blur-xl
                     shadow-[0_10px_40px_rgba(255,0,0,0.15)]
                     hover:shadow-[0_15px_60px_rgba(255,0,0,0.25)]
                     transition
+                    mx-4
                     "
                   >
 
                     {/* IMAGE */}
                     {getPrimaryImage(service) && (
-                      <div className="w-full lg:w-[380px] aspect-[2/3] overflow-hidden rounded-xl border border-white/10">
+                      <div className="w-full max-w-[480px] aspect-[2/3] overflow-hidden rounded-xl border border-white/10 mx-auto lg:mx-0">
+
                         <img
                           src={getPrimaryImage(service)}
                           alt={service.name}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover transition duration-500 hover:scale-105"
                         />
+
                       </div>
                     )}
 
                     {/* CONTENT */}
                     <div>
 
-                      <h3 className="text-3xl font-bold text-white">
+                      <h3 className="text-2xl md:text-3xl font-bold text-white">
                         {service.name}
                       </h3>
 
@@ -119,7 +127,7 @@ function Pricing() {
                         {getShortDescription(service.description)}
                       </p>
 
-                      <div className="mt-6 text-2xl font-extrabold text-red-400">
+                      <div className="mt-6 text-xl md:text-2xl font-extrabold text-red-400">
                         ₹{service.price}
                       </div>
 
@@ -138,8 +146,7 @@ function Pricing() {
                           className="
                           bg-red-500
                           hover:bg-red-600
-                          px-6
-                          py-3
+                          px-6 py-3
                           rounded-lg
                           font-semibold
                           text-white
@@ -153,8 +160,7 @@ function Pricing() {
                           to={`/services/${service._id}`}
                           className="
                           border border-white/20
-                          px-6
-                          py-3
+                          px-6 py-3
                           rounded-lg
                           text-gray-200
                           hover:bg-white/10
