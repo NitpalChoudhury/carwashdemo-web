@@ -1,7 +1,31 @@
 import { Link } from "react-router-dom";
 import { FiPhone, FiMail, FiMapPin, FiExternalLink } from "react-icons/fi";
+import { FaInstagram, FaFacebookF, FaYoutube } from "react-icons/fa";
 
 function Footer() {
+  const socialLinks = [
+    {
+      label: "Instagram - Cozi Cars Shillong",
+      href: "https://www.instagram.com/cozicarsshillong?igsh=OXQxcmVneHY5eGE2&utm_source=qr",
+      icon: FaInstagram,
+    },
+    {
+      label: "Instagram - Shillong Cozy Pynthor",
+      href: "https://www.instagram.com/shillongcozypynthor?igsh=MTBoM2Z4bndyZTM3Ng%3D%3D&utm_source=qr",
+      icon: FaInstagram,
+    },
+    {
+      label: "Facebook",
+      href: "https://www.facebook.com/share/176J5Mz8d5/?mibextid=wwXIfr",
+      icon: FaFacebookF,
+    },
+    {
+      label: "YouTube",
+      href: "https://www.youtube.com/",
+      icon: FaYoutube,
+    },
+  ];
+
   return (
     <footer className="mt-20 border-t border-white/10 bg-gradient-to-b from-black/90 via-black/95 to-[#060d14]">
 
@@ -91,6 +115,28 @@ function Footer() {
               <FiMail className="text-red-400" />
               franky281092@gmail.com
             </p>
+
+            <div className="pt-2">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-red-400">
+                Follow Us
+              </p>
+
+              <div className="flex flex-wrap items-center gap-2">
+                {socialLinks.map(({ label, href, icon: Icon }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={label}
+                    title={label}
+                    className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 bg-white/5 text-gray-200 transition hover:border-red-400 hover:text-red-300"
+                  >
+                    <Icon className="text-base" />
+                  </a>
+                ))}
+              </div>
+            </div>
 
           </div>
         </div>
