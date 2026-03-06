@@ -188,7 +188,7 @@ function Contact() {
 
             <div className="flex items-center gap-3">
               <FiMail className="text-lg text-red-400" />
-              <p>support@shillongcozicars.com</p>
+              <p>franky281092@gmail.com</p>
             </div>
 
             <div className="flex items-start gap-3">

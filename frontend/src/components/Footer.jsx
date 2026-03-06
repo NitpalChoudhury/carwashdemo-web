@@ -89,7 +89,7 @@ function Footer() {
 
             <p className="flex items-center gap-2">
               <FiMail className="text-red-400" />
-              support@shillongcozicars.com
+              franky281092@gmail.com
             </p>
 
           </div>

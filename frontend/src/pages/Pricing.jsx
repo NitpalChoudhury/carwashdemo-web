@@ -7,11 +7,13 @@ function Pricing() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const getPrimaryImage = (service) => service.images?.[0] || service.image || "";
+  const getPrimaryImage = (service) =>
+    service.images?.[0] || service.image || "";
+
   const getShortDescription = (description = "") => {
     const text = String(description).trim();
     if (!text) return "No description available.";
-    return text.length > 110 ? `${text.slice(0, 110)}...` : text;
+    return text.length > 120 ? `${text.slice(0, 120)}...` : text;
   };
 
   useEffect(() => {
@@ -22,7 +24,7 @@ function Pricing() {
         if (isMounted) setServices(Array.isArray(data) ? data : []);
       })
       .catch(() => {
-        if (isMounted) setError("Failed to load pricing from services.");
+        if (isMounted) setError("Failed to load pricing.");
       })
       .finally(() => {
         if (isMounted) setLoading(false);
@@ -40,88 +42,150 @@ function Pricing() {
       acc[category].push(service);
       return acc;
     }, {});
-
     return Object.entries(grouped).sort((a, b) => a[0].localeCompare(b[0]));
   }, [services]);
 
   return (
-    <div className="page-shell py-14">
-      <div className="text-center">
+    <div className="page-shell py-16">
+
+      {/* Header */}
+      <div className="text-center mb-14">
         <h1 className="text-4xl font-bold text-white tracking-wide">
           Our Pricing
         </h1>
-        <p className="mt-3 text-sm text-gray-300">
+        <p className="mt-3 text-gray-400 text-sm">
           Transparent pricing powered directly by your backend services.
         </p>
       </div>
 
       {error && (
-        <p className="mt-8 rounded-xl border border-red-400/40 bg-red-500/10 p-4 text-center text-sm text-red-200">
-          {error}
-        </p>
+        <p className="mb-8 text-center text-red-300">{error}</p>
       )}
 
       {loading ? (
-        <p className="mt-10 text-center text-sm text-gray-300">Loading services...</p>
+        <p className="text-center text-gray-400">Loading services...</p>
       ) : (
-        <div className="mt-12 space-y-12">
+        <div className="space-y-16">
+
           {servicesByCategory.map(([category, categoryServices]) => (
             <section key={category}>
-              <h2 className="mb-5 text-2xl font-bold text-white">{category}</h2>
 
-              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              <h2 className="text-2xl font-bold text-white mb-8">
+                {category}
+              </h2>
+
+              <div className="space-y-10">
+
                 {categoryServices.map((service) => (
-                  <article
+
+                  <div
                     key={service._id}
                     className="
-                      rounded-2xl border border-white/10 bg-white/5
-                      shadow-[0_8px_25px_rgba(255,0,0,0.15)]
-                      backdrop-blur-xl p-6 transition
-                      hover:scale-[1.02] hover:border-red-400/40
-                      hover:shadow-[0_12px_30px_rgba(255,0,0,0.25)]
+                    grid
+                    grid-cols-1
+                    lg:grid-cols-[380px_1fr]
+                    gap-10
+                    items-center
+                    bg-white/5
+                    border border-white/10
+                    rounded-2xl
+                    p-8
+                    backdrop-blur-xl
+                    shadow-[0_10px_40px_rgba(255,0,0,0.15)]
+                    hover:shadow-[0_15px_60px_rgba(255,0,0,0.25)]
+                    transition
                     "
                   >
+
+                    {/* IMAGE */}
                     {getPrimaryImage(service) && (
-                      <img
-                        src={getPrimaryImage(service)}
-                        alt={service.name}
-                        className="h-44 w-full rounded-xl border border-white/10 object-cover"
-                      />
+                      <div className="w-full lg:w-[380px] aspect-[2/3] overflow-hidden rounded-xl border border-white/10">
+                        <img
+                          src={getPrimaryImage(service)}
+                          alt={service.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
                     )}
 
-                    <h3 className="mt-4 text-xl font-semibold text-white">{service.name}</h3>
+                    {/* CONTENT */}
+                    <div>
 
-                    <p className="mt-2 text-2xl font-extrabold text-red-400">₹{service.price}</p>
+                      <h3 className="text-3xl font-bold text-white">
+                        {service.name}
+                      </h3>
 
-                    <p className="mt-2 text-sm leading-relaxed text-gray-300">
-                      {getShortDescription(service.description)}
-                    </p>
+                      <p className="text-gray-400 mt-3 max-w-xl">
+                        {getShortDescription(service.description)}
+                      </p>
 
-                    <div className="mt-5 grid grid-cols-2 gap-3">
-                      <Link
-                        to={`/services/${service._id}`}
-                        className="inline-block w-full rounded-lg border border-red-400/40 px-4 py-2 text-center text-sm font-semibold text-red-300 transition hover:bg-red-500/10"
-                      >
-                        View Details
-                      </Link>
-                      <Link
-                        to="/booking"
-                        className="inline-block w-full rounded-lg bg-red-500 px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-red-600 active:scale-95"
-                      >
-                        Choose
-                      </Link>
+                      <div className="mt-6 text-2xl font-extrabold text-red-400">
+                        ₹{service.price}
+                      </div>
+
+                      {/* FEATURES */}
+                      <div className="mt-6 text-gray-300 text-sm space-y-1">
+                        <p>✔ Premium Cleaning</p>
+                        <p>✔ Safe for Vehicle</p>
+                        <p>✔ Eco Friendly Products</p>
+                      </div>
+
+                      {/* BUTTONS */}
+                      <div className="mt-8 flex flex-wrap gap-4">
+
+                        <Link
+                          to="/booking"
+                          className="
+                          bg-red-500
+                          hover:bg-red-600
+                          px-6
+                          py-3
+                          rounded-lg
+                          font-semibold
+                          text-white
+                          transition
+                          "
+                        >
+                          Book this service
+                        </Link>
+
+                        <Link
+                          to={`/services/${service._id}`}
+                          className="
+                          border border-white/20
+                          px-6
+                          py-3
+                          rounded-lg
+                          text-gray-200
+                          hover:bg-white/10
+                          transition
+                          "
+                        >
+                          Browse others
+                        </Link>
+
+                      </div>
+
                     </div>
-                  </article>
+
+                  </div>
+
                 ))}
+
               </div>
+
             </section>
           ))}
 
           {!servicesByCategory.length && (
-            <p className="text-center text-sm text-gray-300">No services available right now.</p>
+            <p className="text-center text-gray-400">
+              No services available right now.
+            </p>
           )}
+
         </div>
       )}
+
     </div>
   );
 }
